@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm install
+      - run: npm run typecheck
+      - run: npm test
+
+  integration:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: troposphere
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      LABELER_DID: did:web:labeler.test.example
+      LABELER_SIGNING_KEY: '8732a1276dc5f81a9688be819cdeafd94973debc8fd8c88fa7199dc641ec30b3'
+      ADMIN_TOKEN: testtoken
+      DATABASE_URL: postgres://postgres:test@localhost:5432/troposphere
+      PORT: '4100'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm install
+      - run: npm run db:init
+      - name: Start server and run smoke
+        env:
+          LABELER_URL: http://localhost:4100
+          SIGNING_DID_KEY: did:key:zQ3shqJdjbHgHG91FJ2bUrW618ksaaWameXq5ANsTngZHBW3E
+        run: |
+          node --experimental-strip-types src/index.ts &
+          for i in $(seq 1 30); do curl -sf http://localhost:4100/health && break; sleep 1; done
+          npm run smoke
