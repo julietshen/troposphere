@@ -20,20 +20,21 @@ signing key on the labeler only. Your backend never touches the key.
 
 ## Coop
 
-[Coop](https://github.com/roostorg/coop) is the console troposphere is built for, and it is the
-Ozone UI replacement: the review queue, reviewer roles, and event history live in Coop.
-`troposphere` is the atproto plumbing Coop uses. Coop already ingests atproto content,
-runs rules, routes items to review queues, and fires actions; a Coop action issues an outbound
-HTTP callback, which is the seam that points at this service.
+[Coop](https://github.com/roostorg/coop) is the moderation tool troposphere is built for, and it
+plays the role Ozone's UI would: your policies, review queues, reviewer roles, and event history
+live in Coop. `troposphere` is the atproto plumbing Coop uses. troposphere ingests atproto content
+into Coop (Coop itself has no firehose); Coop runs the rules you configure, routes items to review
+queues, and fires the actions you set up. A Coop action issues an outbound HTTP callback, which is
+the seam that points at this service.
 
-The wiring, once built (see [roadmap](./roadmap.md)):
+The wiring (see [Deploying with Coop](./deploying-with-coop.md)):
 
-- A Coop label action's callback URL points at `POST /admin/labels`; a takedown action points at
-  `POST /admin/enforce`.
+- A Coop label action's callback URL points at `POST /coop/action` (or `/admin/labels`); a
+  takedown action points at `POST /admin/enforce`.
 - The action body carries the subject `at://` URI (and CID) and the label value or takedown flag.
 - Reports forwarded from `troposphere` land in a Coop review queue.
-- The label vocabulary Coop is configured with is used to generate the labeler's
-  `app.bsky.labeler.service` declaration.
+- Generating the labeler's `app.bsky.labeler.service` declaration from Coop's configured labels is
+  the one remaining piece (see [roadmap](./roadmap.md)).
 
 The result is a full loop with no Ozone in the path: atproto content and reports flow into Coop,
 a reviewer or rule decides, and `troposphere` publishes the label or applies the takedown.
