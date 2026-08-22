@@ -14,6 +14,7 @@
 - [Ingesting content into Coop](./ingesting-content.md)
 - [Using it from a moderation backend](./driving-from-a-backend.md)
 - [Deploying with Coop](./deploying-with-coop.md)
+- [Testing locally against Coop](./testing-locally.md)
 - [Operations](./operations.md)
 - [Migrating from Ozone](./migrating-from-ozone.md)
 - [Reference](./reference.md)
