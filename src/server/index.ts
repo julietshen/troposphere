@@ -36,7 +36,10 @@ export function buildApp({ labels, reports, resolver, keypair, config }: ServerD
   });
   server.router.post('/admin/labels', express.json(), adminLabelsHandler(labels, keypair, config));
   server.router.post('/admin/enforce', express.json(), enforceHandler(config));
-  server.router.post('/coop/action', express.json(), coopActionHandler(labels, keypair, config, resolver));
+  const coopAction = coopActionHandler(labels, keypair, config, resolver);
+  server.router.post('/coop/action', express.json(), coopAction);
+  // Alias matching the workshop relay path, so a Coop action wired for the relay works as-is.
+  server.router.post('/label', express.json(), coopAction);
 
   // Mounting the xrpc router on a parent app fires its 'mount' event, which is how
   // xrpc-server installs the WebSocket upgrade handler for subscribeLabels. Calling

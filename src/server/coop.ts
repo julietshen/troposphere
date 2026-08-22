@@ -15,6 +15,9 @@ interface CoopBody {
     takedown?: unknown;
     cid?: unknown;
     ref?: unknown;
+    // Alias for `create`, matching the workshop relay shape ({ custom: { labelVal } }), so an
+    // existing Coop label action wired for the relay drops onto troposphere unchanged.
+    labelVal?: unknown;
   };
 }
 
@@ -48,7 +51,7 @@ export function coopActionHandler(
     }
 
     const custom = body.custom ?? {};
-    const create = strings(custom.create);
+    const create = [...strings(custom.create), ...strings(custom.labelVal)];
     const negate = strings(custom.negate);
     const hasTakedown = typeof custom.takedown === 'boolean';
     if (!create.length && !negate.length && !hasTakedown) {
