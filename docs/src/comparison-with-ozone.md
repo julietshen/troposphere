@@ -27,14 +27,17 @@ uses to publish labels, receive reports, and enforce takedowns.
 
 ## When to use which
 
-Use **Ozone** if you want a complete, batteries-included moderation console and are happy
-to run its stack.
+Use **Ozone** if you want Bluesky's moderation console and are happy to run its stack.
 
-Use **troposphere** if you already have (or want to build) your own moderation workflow,
-and you only need the atproto-facing labeler. You keep your queue, your rules, your
-reviewers, and your database, and call one HTTP endpoint to publish labels. This is the
-natural fit when a platform like [Coop](https://github.com/roostorg/coop) is the backend,
-or when you have a classifier or bespoke tooling that decides what to label.
+Use **Coop + troposphere** if you want to build your moderation workflow in
+[Coop](https://github.com/roostorg/coop) - its review queues, automated enforcement rules,
+matching banks, reviewer roles - and have it act on AT Protocol content. Coop is where the
+work happens; troposphere connects that workflow to the network, so content flows in and
+labels, reports, and takedowns flow out. You do not bring your own queue or rules; you build
+them in Coop.
+
+(If you are not using Coop at all, troposphere's endpoints are plain HTTP, so a classifier or
+your own tooling can call them directly. But Coop is what it is designed for.)
 
 ## What stays the same for consumers
 
