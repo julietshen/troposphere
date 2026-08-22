@@ -29,8 +29,10 @@ From that setup you need three things:
   with `Authorization: Bearer <ADMIN_TOKEN>`.
 
 This loop has been run end to end against a real local Coop: items post to `/items/async` (202),
-reports post to `/report` (201, enqueued), and a Coop action posts to troposphere and produces a
-signed label that verifies against the labeler key.
+reports post to `/report` (201, enqueued), the reported item shows up in a Coop review queue, and
+a reviewer picking a label action in the Review Console posts to troposphere and produces a signed
+label that verifies against the labeler key. The seed's Bleep/Bloop actions post to `/label` with
+`{ labelVal }`, which troposphere accepts as-is.
 
 ## 2. Run troposphere
 
@@ -62,9 +64,10 @@ Post from that account on Bluesky and watch the item show up in Coop.
 
 ## 4. Label, and verify it is real
 
-Open the item in Coop and pick the label action. That fires `POST /coop/action` on troposphere,
-which signs and stores the label. Confirm it is a real, valid label by querying it and checking
-the signature (the smoke test does exactly this):
+Open the reported item in Coop's Review Console, pick the label action in the Decision panel, and
+Submit. Coop fires the action to troposphere (`/coop/action`, or `/label` for a relay-style
+action), which signs and stores the label. Confirm it is a real, valid label by querying it and
+checking the signature (the smoke test does exactly this):
 
 ```bash
 LABELER_URL=http://localhost:4100 \

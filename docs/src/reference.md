@@ -42,6 +42,7 @@ See [Ingesting content into Coop](./ingesting-content.md).
 | `POST` | `/admin/labels` | bearer | Create and negate labels. |
 | `POST` | `/admin/enforce` | bearer | Take down or restore on your PDS. |
 | `POST` | `/coop/action` | bearer | Coop `CUSTOM_ACTION` shape: label and/or take down. |
+| `POST` | `/label` | bearer | Alias of `/coop/action`, matching the workshop relay path. |
 | `GET` | `/xrpc/com.atproto.label.queryLabels` | none | Query labels by URI pattern. |
 | `GET` (WS) | `/xrpc/com.atproto.label.subscribeLabels` | none | Label firehose. |
 | `POST` | `/xrpc/com.atproto.moderation.createReport` | service JWT | Accept a report. |
@@ -58,8 +59,11 @@ Take down or restore a record or account on your own PDS. Bearer-authenticated w
 Accepts Coop's `CUSTOM_ACTION` webhook body directly, so a Coop action uses troposphere with no
 adapter. Bearer-authenticated with `ADMIN_TOKEN`. Body: `item.id` (the subject atproto URI or
 DID) and `custom` with any of `create` / `negate` (label values) and `takedown` (boolean), plus
-optional `cid` and `ref`. For a record without a `cid`, the current version is resolved from its
-own PDS. See [Deploying with Coop](./deploying-with-coop.md).
+optional `cid` and `ref`. `custom.labelVal` is accepted as an alias for `create`, so a Coop action
+wired for the old workshop relay (posting `{ item, custom: { labelVal } }` to `/label`) works
+unchanged. For a record without a `cid`, the current version is resolved from its own PDS; if that
+cannot be resolved the label is still emitted, without a `cid`. See
+[Deploying with Coop](./deploying-with-coop.md).
 
 ## POST /xrpc/com.atproto.moderation.createReport
 

@@ -2,9 +2,14 @@
 
 For Coop to moderate AT Protocol content, that content has to arrive as Coop items.
 troposphere's ingestion worker streams [Jetstream](https://docs.bsky.app/blog/jetstream) and
-posts records to Coop's item intake, so Coop can run rules and route content to review queues.
-This is the proactive-detection path; user reports arrive separately (see
+posts records to Coop's item intake over HTTP, so Coop can run rules and route content to review
+queues. This is the proactive-detection path; user reports arrive separately (see
 [Receiving reports](./receiving-reports.md)).
+
+Coop itself never connects to Jetstream and needs no atproto-specific connector. This worker does
+that job and posts plain items to `/items/async`, which is why Coop stays generic. If your Coop
+shows no atproto content, it is not because Coop lacks a firehose; it is because this worker is not
+running or is scoped to different accounts.
 
 Ingestion runs as its own process, opt-in, so a troposphere deployment that only labels does
 not pay for it.
