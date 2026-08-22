@@ -10,4 +10,5 @@ build-dir = "book"
 
 [output.html]
 git-repository-url = "https://github.com/julietshen/troposphere"
+site-url = "/troposphere/"
 default-theme = "rust"
