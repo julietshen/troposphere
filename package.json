@@ -1,0 +1,36 @@
+{
+  "name": "troposphere",
+  "version": "0.1.0",
+  "description": "A standalone AT Protocol labeler service. A backend-agnostic, self-hostable alternative to Ozone's label emitter: any moderation backend drives it over an auth-gated API; it signs labels and serves the subscribeLabels firehose and queryLabels to the atproto network.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "start": "node dist/index.js",
+    "dev": "node --experimental-strip-types --watch src/index.ts",
+    "db:init": "node --experimental-strip-types src/db/init.ts",
+    "keygen": "node --experimental-strip-types src/keygen.ts",
+    "smoke": "node scripts/smoke.mjs",
+    "docs:build": "mdbook build docs",
+    "docs:serve": "mdbook serve docs"
+  },
+  "dependencies": {
+    "@atproto/api": "^0.20.41",
+    "@atproto/common": "^0.4.11",
+    "@atproto/crypto": "^0.5.4",
+    "@atproto/identity": "^0.5.9",
+    "@atproto/xrpc-server": "^0.12.5",
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^24.0.0",
+    "@types/pg": "^8.11.10",
+    "typescript": "^5.7.2"
+  }
+}
