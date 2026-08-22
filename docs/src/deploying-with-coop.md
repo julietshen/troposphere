@@ -1,12 +1,13 @@
 # Deploying with Coop
 
-[Coop](https://github.com/roostorg/coop) is the reference console for `troposphere`. Coop plays
-the role Ozone's UI would (the review queue, reviewer roles, rules, and event history);
-`troposphere` is the atproto plumbing Coop uses to publish labels, receive reports, and
-enforce takedowns.
+[Coop](https://github.com/roostorg/coop) is the moderation tool; `troposphere` is its AT Protocol
+side. Coop is where you set up your own policies, rules, and actions and where your reviewers work
+(the role Ozone's UI plays); `troposphere` is the plumbing Coop uses to publish labels, receive
+reports, and enforce takedowns. Coop does not come with policies or reviewers of its own, and it
+holds no atproto-specific code; those are yours, and troposphere's, respectively.
 
 ```
-AT Protocol content ─▶ Coop (ingest, rules, review queue, reviewers)
+AT Protocol content ─▶ Coop (your policies, rules, actions; your reviewers)
                               │  decision (label / take down)
                               ▼
                        troposphere  ─▶ signed labels ─▶ subscribeLabels / queryLabels
@@ -17,10 +18,10 @@ AT Protocol content ─▶ Coop (ingest, rules, review queue, reviewers)
 
 ## What each side owns
 
-- **Coop**: ingests atproto content as items, runs rules, routes to review queues, and lets
-  reviewers act. Its actions fire outbound HTTP callbacks.
-- **troposphere**: signs and serves labels, accepts and forwards reports, enforces takedowns. It
-  holds the labeler signing key; Coop never sees it.
+- **Coop**: the tool where you configure policies, rules, and actions, review queued items, and
+  act on them. Its actions fire outbound HTTP callbacks. The reviewers and policies are yours.
+- **troposphere**: ingests content into Coop, signs and serves labels, accepts and forwards
+  reports, and enforces takedowns. It holds the labeler signing key; Coop never sees it.
 
 ## 1. Deploy troposphere
 

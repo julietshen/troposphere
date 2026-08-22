@@ -6,9 +6,9 @@ ingests AT Protocol content into Coop, signs and serves moderation labels (the s
 `subscribeLabels` firehose and `queryLabels` endpoint), routes user reports into Coop's review
 queue, and enforces takedowns on your PDS.
 
-Coop is the console and the moderation workflow (queues, reviewers, rules, event history);
-troposphere is the atproto plumbing Coop uses. It works for **any** AT Protocol project
-regardless of its lexicons, PDS, or AppView.
+Coop is the moderation tool where you set up your own policies, rules, and actions and where your
+reviewers work; troposphere is the atproto plumbing Coop uses. It works for **any** AT Protocol
+project regardless of its lexicons, PDS, or AppView.
 
 Built on the maintained `@atproto/*` primitives (`@atproto/crypto`, `@atproto/xrpc-server`,
 `@atproto/common`). The label and enforcement endpoints are plain authenticated HTTP, so
@@ -38,8 +38,9 @@ non-Coop tooling can use them too, but Coop is what troposphere is designed for.
 - Persists labels and reports in Postgres, with a monotonic sequence for firehose cursors.
   Emitted labels are permanent on the network, so the store is durable by design.
 
-[Coop](https://github.com/roostorg/coop) is the console (review queue, reviewer roles, event
-history), playing the role Ozone's UI would; `troposphere` is the atproto plumbing it uses.
+[Coop](https://github.com/roostorg/coop) is the moderation tool (your policies and actions, review
+queues, reviewer roles, event history), playing the role Ozone's UI would; `troposphere` is the
+atproto plumbing it uses.
 
 ## Quickstart
 

@@ -1,8 +1,9 @@
 # Using it from a moderation backend
 
 `troposphere` is the atproto-facing half of a moderation system, and [Coop](./deploying-with-coop.md)
-is the other half: Coop's queues, rules, and reviewers decide what to label or take down, then
-use troposphere. This page covers the general integration shape; if you are using Coop, see
+is the other half: the policies, rules, and actions you set up in Coop, and the reviewers who work
+there, decide what to label or take down, then use troposphere. This page covers the general
+integration shape; if you are using Coop, see
 [Deploying with Coop](./deploying-with-coop.md), which wires it up with no adapter.
 
 ## The integration in one call

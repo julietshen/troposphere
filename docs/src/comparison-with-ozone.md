@@ -8,12 +8,15 @@ Ozone is the moderation system Bluesky builds and runs. It is two things in one 
 2. A **label emitter**: it holds the labeler signing key, mints signed `com.atproto.label`
    records, and publishes them over `subscribeLabels` and `queryLabels`.
 
-`troposphere` is only the second half, deliberately.
+`troposphere` covers the AT Protocol-facing parts: pulling content in for review, publishing
+labels, taking reports, and enforcing takedowns. Coop is the moderation tool. troposphere is not
+just a labeler, and it is not a console; together with Coop it replaces Ozone.
 
 | | Ozone | troposphere |
 | --- | --- | --- |
-| Moderation console / queue | Built in | Coop (the console troposphere is built for) |
-| Report intake (`createReport`) | Built in (`tools.ozone.*`) | Yes; enriched and forwarded to your backend |
+| Moderation tool / queue | Built in | Coop (the tool troposphere works with) |
+| Ingest content for review | Bluesky's infra feeds it | Yes (Jetstream worker) |
+| Report intake (`createReport`) | Built in (`tools.ozone.*`) | Yes; enriched and forwarded to Coop |
 | Signs and serves labels | Yes | Yes |
 | `subscribeLabels` firehose | Yes | Yes |
 | `queryLabels` | Yes | Yes |

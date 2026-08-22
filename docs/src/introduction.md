@@ -8,9 +8,9 @@ into Coop, signs and serves moderation labels (the standard `subscribeLabels` fi
 on your PDS.
 
 Ozone bundles two things: a moderation console with its own data model, and the plumbing that
-signs and publishes labels. Coop is the console and workflow; `troposphere` is the atproto
-plumbing it uses. It works for any AT Protocol project regardless of its lexicons, PDS, or
-AppView.
+signs and publishes labels. Coop is the moderation tool, where you set up your own policies and
+actions and where your reviewers work; `troposphere` is the atproto plumbing it uses. It works
+for any AT Protocol project regardless of its lexicons, PDS, or AppView.
 
 It is built on the maintained `@atproto/*` primitives (`@atproto/crypto`,
 `@atproto/xrpc-server`, `@atproto/common`). The label and enforcement endpoints are plain
@@ -31,9 +31,9 @@ designed for.
   [Building on the AT Protocol](./building-on-atproto.md).
 - Teams evaluating an alternative to running Ozone.
 
-[Coop](https://github.com/roostorg/coop) is the console and workflow troposphere is built for.
-If you are not using Coop, the label and enforcement endpoints are plain authenticated HTTP, so
-other tooling can use them too.
+[Coop](https://github.com/roostorg/coop) is the moderation tool troposphere is built for. If you
+are not using Coop, the label and enforcement endpoints are plain authenticated HTTP, so other
+tooling can use them too.
 
 ## What it does today
 
@@ -50,9 +50,10 @@ other tooling can use them too.
 
 ## What it does not do
 
-`troposphere` is the atproto plumbing, not the review console. It does not decide what to
-label or take down; Coop does (its queues, rules, and reviewers), then uses troposphere's
-APIs. Identity provisioning helpers and multi-tenant operation are on the
-[roadmap](./roadmap.md).
+`troposphere` is the atproto plumbing, not the moderation tool. It does not decide what to
+label or take down. Coop does that: Coop is the tool where you set up your own policies, rules,
+and actions and where your reviewers work, and it calls troposphere's APIs to carry a decision
+out. Coop does not come with its own policies or reviewers; those are yours. Identity
+provisioning helpers and multi-tenant operation are on the [roadmap](./roadmap.md).
 
 The fastest way to see it work is [Getting started](./getting-started.md).

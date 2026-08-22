@@ -1,6 +1,6 @@
 [book]
 title = "troposphere"
-description = "Run your own AT Protocol labeler as a self-hostable alternative to Ozone"
+description = "The AT Protocol side of Coop: ingest content, publish labels, take reports, and enforce takedowns. A self-hostable alternative to Ozone."
 authors = ["ROOST"]
 language = "en"
 src = "src"
