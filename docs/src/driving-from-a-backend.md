@@ -1,13 +1,14 @@
-# Driving it from a moderation backend
+# Using it from a moderation backend
 
-`troposphere` is the atproto-facing half of a moderation system. Something else decides what
-to label and calls `POST /admin/labels`. That something can be a rules engine, a classifier,
-a human review queue, or a full platform.
+`troposphere` is the atproto-facing half of a moderation system, and [Coop](./deploying-with-coop.md)
+is the other half: Coop's queues, rules, and reviewers decide what to label or take down, then
+use troposphere. This page covers the general integration shape; if you are using Coop, see
+[Deploying with Coop](./deploying-with-coop.md), which wires it up with no adapter.
 
 ## The integration in one call
 
-Whatever your backend, the integration is the same: when a decision is made to label a piece
-of content, POST the subject and label values with the admin token.
+Whatever the backend, the integration is the same: when a decision is made to label a piece of
+content, POST the subject and label values with the admin token.
 
 ```
 your backend ──(decision)──> POST /admin/labels ──> signed label ──> subscribeLabels / queryLabels ──> the network
@@ -18,9 +19,9 @@ signing key on the labeler only. Your backend never touches the key.
 
 ## Coop
 
-[Coop](https://github.com/roostorg/coop) is the reference driver, and for this project it is the
+[Coop](https://github.com/roostorg/coop) is the console troposphere is built for, and it is the
 Ozone UI replacement: the review queue, reviewer roles, and event history live in Coop.
-`troposphere` is the protocol-facing arm Coop drives. Coop already ingests atproto content,
+`troposphere` is the atproto plumbing Coop uses. Coop already ingests atproto content,
 runs rules, routes items to review queues, and fires actions; a Coop action issues an outbound
 HTTP callback, which is the seam that points at this service.
 
@@ -39,7 +40,7 @@ a reviewer or rule decides, and `troposphere` publishes the label or applies the
 ## Your own tooling
 
 You do not need Coop. Any script or service that can make an authenticated HTTP request can
-drive the labeler:
+use the labeler:
 
 ```bash
 curl -X POST https://labeler.example.com/admin/labels \
@@ -48,7 +49,7 @@ curl -X POST https://labeler.example.com/admin/labels \
   -d '{ "subject": { "uri": "at://..." }, "create": ["spam"] }'
 ```
 
-A classifier that flags content, a moderation bot, or a spreadsheet-driven batch job all
+A classifier that flags content, a moderation bot, or a spreadsheet-run batch job all
 integrate the same way.
 
 ## Receiving reports

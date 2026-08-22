@@ -6,7 +6,7 @@ The labeler's whole trust model rests on its signing key. Anyone with the key ca
 labels as your labeler. Treat `LABELER_SIGNING_KEY` like any high-value secret:
 
 - Store it in your platform's secret manager, not in the repo or an image.
-- Give it only to the labeler process. Backends drive the labeler over the admin API and never
+- Give it only to the labeler process. Backends use the labeler over the admin API and never
   need the signing key.
 - Have a rotation plan. Rotating means publishing a new `#atproto_label` key in the DID
   document. `did:plc` offers key recovery through the PLC directory; `did:web` rotation is a

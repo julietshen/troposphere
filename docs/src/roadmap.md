@@ -1,8 +1,19 @@
 # Roadmap
 
-`troposphere` today signs, stores, serves, and streams labels; accepts, enriches, and forwards
-reports; and enforces takedowns on your own PDS, all driven by any backend. These are the pieces
-not yet built, in rough priority order.
+`troposphere` today ingests content into Coop; signs, stores, serves, and streams labels;
+accepts, enriches, and forwards reports; and enforces takedowns on your own PDS. These are the
+pieces not yet built, in rough priority order.
+
+## Custom lexicon ingestion
+
+The ingestion worker maps `app.bsky.feed.post` and `app.bsky.actor.profile`. Projects with their
+own record types would benefit from a configurable mapping so `com.yourapp.*` records ingest into
+their own Coop item types.
+
+## Jetstream cursor and replay
+
+Ingestion is a live tail today. Persisting a cursor and using Jetstream v2 replay would let a
+worker catch up after downtime without missing content.
 
 ## Multi-PDS enforcement
 

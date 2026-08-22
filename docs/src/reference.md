@@ -20,6 +20,20 @@ Set via environment (a `.env` file is loaded in development).
 | `PDS_URL` | no | | Your PDS, for enforcement. Enables `POST /admin/enforce`. |
 | `PDS_ADMIN_PASSWORD` | no | | Admin password for `PDS_URL`. |
 
+Ingestion worker (`npm run ingest`) only:
+
+| Variable | Required | Default | Meaning |
+| --- | --- | --- | --- |
+| `COOP_ITEMS_URL` | yes | | Coop's `/api/v1/items/async` endpoint. |
+| `COOP_ITEMS_API_KEY` | yes | | Coop org API key, sent as `X-API-KEY`. |
+| `JETSTREAM_URL` | no | `wss://jetstream2.us-east.bsky.network/subscribe` | Jetstream instance. |
+| `JETSTREAM_COLLECTIONS` | no | `app.bsky.feed.post,app.bsky.actor.profile` | Record types to stream. |
+| `JETSTREAM_WANTED_DIDS` | no | (all) | Restrict to specific accounts. |
+| `INGEST_BATCH_SIZE` | no | `50` | Max items per POST. |
+| `INGEST_BATCH_INTERVAL_MS` | no | `1000` | Flush interval. |
+
+See [Ingesting content into Coop](./ingesting-content.md).
+
 ## Endpoints
 
 | Method | Path | Auth | Purpose |
@@ -41,7 +55,7 @@ Take down or restore a record or account on your own PDS. Bearer-authenticated w
 
 ## POST /coop/action
 
-Accepts Coop's `CUSTOM_ACTION` webhook body directly, so a Coop action drives troposphere with no
+Accepts Coop's `CUSTOM_ACTION` webhook body directly, so a Coop action uses troposphere with no
 adapter. Bearer-authenticated with `ADMIN_TOKEN`. Body: `item.id` (the subject atproto URI or
 DID) and `custom` with any of `create` / `negate` (label values) and `takedown` (boolean), plus
 optional `cid` and `ref`. For a record without a `cid`, the current version is resolved from its
@@ -82,6 +96,7 @@ Errors: `401` (missing or wrong token), `400` (missing `subject.uri`, or neither
 | --- | --- |
 | `npm run keygen` | Generate a signing key and print the public multibase. |
 | `npm run db:init` | Apply the Postgres schema. |
+| `npm run ingest` | Stream Jetstream into Coop's item intake. |
 | `npm run dev` | Run with watch (type-stripped, no build step). |
 | `npm run build` | Compile TypeScript to `dist/`. |
 | `npm start` | Run the compiled build. |

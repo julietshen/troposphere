@@ -2,7 +2,7 @@
 
 [Coop](https://github.com/roostorg/coop) is the reference console for `troposphere`. Coop plays
 the role Ozone's UI would (the review queue, reviewer roles, rules, and event history);
-`troposphere` is the protocol-facing arm Coop drives to publish labels, receive reports, and
+`troposphere` is the atproto plumbing Coop uses to publish labels, receive reports, and
 enforce takedowns.
 
 ```
@@ -58,9 +58,18 @@ own PDS); see [Enforcement](./enforcement.md).
 
 ## 3. Ingestion and review
 
-Coop ingests atproto content (for example from Jetstream) as items, runs rules, and routes them
-to queues. A reviewer opens an item, sees the post and its author context, and picks an action.
-Choosing a label or takedown action fires the callback in step 2. None of this involves Ozone.
+Run troposphere's ingestion worker to pump atproto content into Coop:
+
+```bash
+COOP_ITEMS_URL=https://your-coop/api/v1/items/async \
+COOP_ITEMS_API_KEY=<coop org API key> \
+JETSTREAM_WANTED_DIDS=<your accounts>   # scope it; the full firehose is huge
+npm run ingest
+```
+
+Coop runs rules over the items and routes them to queues. A reviewer opens an item, sees the post
+and its author context, and picks an action; a label or takedown action fires the callback in
+step 2. None of this involves Ozone. See [Ingesting content into Coop](./ingesting-content.md).
 
 ## 4. Reports in: troposphere to a Coop queue
 

@@ -12,7 +12,7 @@ Ozone is the moderation system Bluesky builds and runs. It is two things in one 
 
 | | Ozone | troposphere |
 | --- | --- | --- |
-| Moderation console / queue | Built in | Bring your own backend (Coop is the reference) |
+| Moderation console / queue | Built in | Coop (the console troposphere is built for) |
 | Report intake (`createReport`) | Built in (`tools.ozone.*`) | Yes; enriched and forwarded to your backend |
 | Signs and serves labels | Yes | Yes |
 | `subscribeLabels` firehose | Yes | Yes |
@@ -22,8 +22,8 @@ Ozone is the moderation system Bluesky builds and runs. It is two things in one 
 | Drive it from your own tooling | Not the primary path | The primary path |
 
 For this project, [Coop](https://github.com/roostorg/coop) plays the role Ozone's UI would: the
-review queue, reviewer roles, and event history. `troposphere` is the protocol-facing arm Coop
-drives to publish labels, receive reports, and enforce takedowns.
+review queue, reviewer roles, and event history. `troposphere` is the atproto plumbing Coop
+uses to publish labels, receive reports, and enforce takedowns.
 
 ## When to use which
 

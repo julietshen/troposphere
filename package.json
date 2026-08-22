@@ -1,7 +1,7 @@
 {
   "name": "troposphere",
   "version": "0.1.0",
-  "description": "A standalone AT Protocol labeler service. A backend-agnostic, self-hostable alternative to Ozone's label emitter: any moderation backend drives it over an auth-gated API; it signs labels and serves the subscribeLabels firehose and queryLabels to the atproto network.",
+  "description": "The AT Protocol arm of Coop. Ingests atproto content into Coop, signs and serves moderation labels (subscribeLabels + queryLabels), routes reports into Coop's review queue, and enforces takedowns on your PDS. Works with any atproto lexicon, PDS, or AppView.",
   "type": "module",
   "license": "Apache-2.0",
   "engines": {
@@ -12,6 +12,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "start": "node dist/index.js",
     "dev": "node --experimental-strip-types --watch src/index.ts",
+    "ingest": "node --experimental-strip-types src/ingest.ts",
     "db:init": "node --experimental-strip-types src/db/init.ts",
     "keygen": "node --experimental-strip-types src/keygen.ts",
     "smoke": "node scripts/smoke.mjs",

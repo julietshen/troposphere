@@ -4,8 +4,8 @@ This guide is for someone building their own thing on the AT Protocol: your own 
 (lexicons), maybe your own PDS, maybe your own AppView. It explains where `troposphere` fits and,
 just as importantly, where it does not assume you are Bluesky.
 
-The short version: `troposphere` is lexicon-, PDS-, and AppView-agnostic. It is the labeling,
-reporting, and enforcement arm for your stack, whatever that stack is.
+The short version: `troposphere` is lexicon-, PDS-, and AppView-agnostic. It handles labeling,
+reporting, and enforcement for your stack, whatever that stack is.
 
 ## What is generic
 
@@ -30,7 +30,7 @@ standard endpoint. `troposphere` does not care who is consuming.
   [Publishing your labeler identity](./identity.md).
 - **A moderation backend.** Something that decides what to label or take down. That can be
   [Coop](./deploying-with-coop.md), a classifier, a rules engine, or your own tooling. See
-  [Driving it from a moderation backend](./driving-from-a-backend.md).
+  [Using it from a moderation backend](./driving-from-a-backend.md).
 - **Label handling in your AppView.** `troposphere` emits standard labels; your AppView has to
   read them and decide what to do (hide, warn, badge). That interpretation is your app's job, as
   it is for any labeler.

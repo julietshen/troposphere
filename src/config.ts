@@ -56,3 +56,36 @@ export function loadConfig(): LabelerConfig {
     pdsAdminPassword: process.env.PDS_ADMIN_PASSWORD || undefined,
   };
 }
+
+// The optional ingestion worker (npm run ingest) has its own config so it does not require
+// the labeler signing key. It streams Jetstream and posts items to Coop's /items/async.
+export interface IngestConfig {
+  jetstreamUrl: string;
+  collections: string[];
+  wantedDids?: string[];
+  coopItemsUrl: string;
+  coopItemsApiKey: string;
+  batchSize: number;
+  batchIntervalMs: number;
+  coopPostType: string;
+  coopAccountType: string;
+}
+
+export function loadIngestConfig(): IngestConfig {
+  return {
+    jetstreamUrl: process.env.JETSTREAM_URL || 'wss://jetstream2.us-east.bsky.network/subscribe',
+    collections: (process.env.JETSTREAM_COLLECTIONS || 'app.bsky.feed.post,app.bsky.actor.profile')
+      .split(',')
+      .map((c) => c.trim())
+      .filter(Boolean),
+    wantedDids: process.env.JETSTREAM_WANTED_DIDS
+      ? process.env.JETSTREAM_WANTED_DIDS.split(',').map((d) => d.trim()).filter(Boolean)
+      : undefined,
+    coopItemsUrl: required('COOP_ITEMS_URL'),
+    coopItemsApiKey: required('COOP_ITEMS_API_KEY'),
+    batchSize: Number(process.env.INGEST_BATCH_SIZE ?? 50),
+    batchIntervalMs: Number(process.env.INGEST_BATCH_INTERVAL_MS ?? 1000),
+    coopPostType: process.env.COOP_POST_TYPE || 'ATproto-post',
+    coopAccountType: process.env.COOP_ACCOUNT_TYPE || 'ATproto-account',
+  };
+}
