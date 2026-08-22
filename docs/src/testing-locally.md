@@ -22,9 +22,15 @@ seed.
 From that setup you need three things:
 
 - the org's **API key** (`X-API-KEY` for `/items/async` and `/report`),
-- the item type ids (default `ATproto-post` / `ATproto-account`),
-- a **label action** and a **takedown action** whose callback URL is your troposphere
-  `POST /coop/action`, with `Authorization: Bearer <ADMIN_TOKEN>`.
+- the **item type IDs** for the post and account types (Coop assigns each type an id; the HTTP
+  intake matches `typeId` against that id, not the display name, so set `COOP_POST_TYPE` /
+  `COOP_ACCOUNT_TYPE` to the ids). The seed output prints them.
+- a **label action** whose callback URL is your troposphere `POST /coop/action` (or `/label`),
+  with `Authorization: Bearer <ADMIN_TOKEN>`.
+
+This loop has been run end to end against a real local Coop: items post to `/items/async` (202),
+reports post to `/report` (201, enqueued), and a Coop action posts to troposphere and produces a
+signed label that verifies against the labeler key.
 
 ## 2. Run troposphere
 

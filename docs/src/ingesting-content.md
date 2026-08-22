@@ -47,9 +47,11 @@ own infrastructure, or filter to your accounts.
 
 ## Item types and custom lexicons
 
-The worker maps `app.bsky.feed.post` to your `ATproto-post` item type and
-`app.bsky.actor.profile` to `ATproto-account`. Those item types must already exist in your Coop
-org (created there once). The mapping produces the same item shape a reported post gets, so
+The worker maps `app.bsky.feed.post` to your post item type and `app.bsky.actor.profile` to your
+account item type. Those item types must already exist in your Coop org (created there once), and
+`COOP_POST_TYPE` / `COOP_ACCOUNT_TYPE` must be set to their **item type IDs** (the id Coop
+assigns each type, not the display name). Coop's HTTP intake matches `typeId` against the id and
+rejects the batch otherwise. The mapping produces the same item shape a reported post gets, so
 ingested and reported content look identical to Coop.
 
 Mapping additional or custom record types (your own lexicons) to Coop item types is not built in

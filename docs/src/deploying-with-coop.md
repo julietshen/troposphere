@@ -79,8 +79,8 @@ Turn on the Coop report format and point troposphere at Coop's report intake:
 REPORT_FORWARD_FORMAT=coop
 REPORT_FORWARD_URL=https://your-coop/api/v1/report
 REPORT_FORWARD_TOKEN=<coop org API key>   # sent as X-API-KEY
-COOP_POST_TYPE=ATproto-post               # your org's item type ids
-COOP_ACCOUNT_TYPE=ATproto-account
+COOP_POST_TYPE=<post item type id>        # the org's item type IDs, not the display names
+COOP_ACCOUNT_TYPE=<account item type id>
 ```
 
 When a user reports content to your labeler, troposphere verifies and enriches the report (see
