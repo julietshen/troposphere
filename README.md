@@ -107,9 +107,10 @@ the labeler and the label values it uses.
   credential, rather than a single configured PDS.
 - `did:web` / `did:plc` identity provisioning helpers and declaration publishing.
 - Multi-tenant operation (one deployment serving several labeler identities).
-- Remaining Coop wiring (the Coop-side action config; optionally generating the labeler
-  declaration from Coop's configured labels). Both data directions are done: `/coop/action`
-  (labels/takedowns out) and `REPORT_FORWARD_FORMAT=coop` (reports in).
+- A helper to generate the labeler declaration from Coop's configured labels. (The Coop
+  integration itself is done: `/coop/action` for labels/takedowns out, `REPORT_FORWARD_FORMAT=coop`
+  for reports in. Creating the actions and queues inside Coop is operator setup, not troposphere
+  code.)
 
 ## License
 

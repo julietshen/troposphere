@@ -27,13 +27,14 @@ Tooling to publish and maintain the labeler identity: generating the `did:web` d
 updating a `did:plc` identity, and publishing and updating the `app.bsky.labeler.service`
 declaration record, ideally kept in sync with the label values the labeler actually emits.
 
-## Coop wiring
+## Labeler declaration from Coop's labels
 
-Both data directions are done: `POST /coop/action` accepts Coop's `CUSTOM_ACTION` body directly
-(labels and takedowns out), and `REPORT_FORWARD_FORMAT=coop` posts Coop's `/api/v1/report`
-envelope (reports in). What remains is the Coop-side action configuration itself (creating the
-actions and attaching them to queues in Coop) and, optionally, generating the labeler declaration
-from Coop's configured labels. See [Deploying with Coop](./deploying-with-coop.md).
+The Coop integration itself is built, in both directions: `POST /coop/action` takes Coop's
+`CUSTOM_ACTION` body for labels and takedowns, and `REPORT_FORWARD_FORMAT=coop` posts Coop's
+`/api/v1/report` envelope for reports. The one troposphere-side piece left is a helper that
+generates the `app.bsky.labeler.service` declaration from the label values configured in Coop, so
+the two stay in sync. (Creating the actions and queues inside Coop is operator setup, covered in
+[Deploying with Coop](./deploying-with-coop.md), not troposphere code.)
 
 ## Multi-tenant operation
 
