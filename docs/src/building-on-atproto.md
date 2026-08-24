@@ -29,10 +29,9 @@ standard endpoint. `troposphere` does not care who is consuming.
   `did:web` under your own domain for full self-hosting, or `did:plc` for portability. See
   [Publishing your labeler identity](./identity.md).
 - **A moderation workflow, in [Coop](./deploying-with-coop.md).** Coop is where you build it:
-  review queues, automated enforcement rules, matching banks, reviewer roles. Coop decides what
-  to label or take down and calls troposphere. (Not using Coop? Any tooling that makes an
-  authenticated HTTP request can call the endpoints instead. See
-  [Using it from a moderation backend](./driving-from-a-backend.md).)
+  review queues, automated enforcement rules, matching banks, reviewer roles. Your policies and
+  actions in Coop decide what to label or take down, and Coop calls troposphere to carry it out.
+  (Other backends work too; see [Driving it from a moderation backend](./driving-from-a-backend.md).)
 - **Label handling in your AppView.** `troposphere` emits standard labels; your AppView has to
   read them and decide what to do (hide, warn, badge). That interpretation is your app's job, as
   it is for any labeler.

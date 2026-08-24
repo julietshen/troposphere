@@ -39,9 +39,6 @@ work happens; troposphere connects that workflow to the network, so content flow
 labels, reports, and takedowns flow out. You do not bring your own queue or rules; you build
 them in Coop.
 
-(If you are not using Coop at all, troposphere's endpoints are plain HTTP, so a classifier or
-your own tooling can call them directly. But Coop is what it is designed for.)
-
 ## What stays the same for consumers
 
 To an AppView or client subscribing to your labeler, there is no difference. A labeler is

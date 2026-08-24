@@ -1,9 +1,8 @@
 # Emitting labels
 
-Labels are created through `POST /admin/labels`, a bearer-authenticated endpoint Coop (or
-other tooling) calls. troposphere does not decide what to label; Coop does, then tells
-troposphere to publish. Coop usually calls `POST /coop/action` instead, which takes Coop's
-action shape directly; `/admin/labels` is the plain version underneath.
+Labels are created through `POST /admin/labels`, a bearer-authenticated endpoint. Coop usually
+calls `POST /coop/action` instead, which takes Coop's action shape directly; `/admin/labels` is
+the plain version underneath.
 
 ## Authentication
 
